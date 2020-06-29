@@ -7,7 +7,7 @@ metadata:
 spec:
   selector:
     app: valaxy-devops-project
-  type: LoadBalancer
+  type: NodePort
   ports:
     - port: 8080
       targetPort: 8080
