@@ -10,7 +10,7 @@ From tomcat:8-jre8
 RUN mkdir -p /opt/app
 ENV PROJECT_HOME /opt/app
 
-COPY target/simple-devops-image-1.0.jar $PROJECT_HOME/simple-devops-image.jar
+#COPY target/simple-devops-image-1.0.jar $PROJECT_HOME/simple-devops-image.jar
 
 WORKDIR $PROJECT_HOME
 
