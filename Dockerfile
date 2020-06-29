@@ -5,7 +5,7 @@ From tomcat:8-jre8
 #MAINTAINER "valaxytech@gmail.com" 
 #COPY ./webapp.war /usr/local/tomcat/webapps
 
-RUN apk update && apk add /bin/sh
+#RUN apk update && apk add /bin/sh
 
 RUN mkdir -p /opt/app
 ENV PROJECT_HOME /opt/app
