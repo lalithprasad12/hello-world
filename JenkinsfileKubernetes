@@ -1,0 +1,34 @@
+node{
+     
+    stage('SCM Checkout'){
+        git url: 'https://github.com/lalithprasad12/hello-world.git',branch: 'master'
+    }
+    
+    stage(" Maven Clean Package"){
+      def mavenHome =  tool name: "Maven-3.6.3", type: "maven"
+      def mavenCMD = "${mavenHome}/bin/mvn"
+      sh "${mavenCMD} clean package"
+      
+    } 
+    
+    
+    stage('Build Docker Image'){
+        sh 'docker build -t lalithprasad12/simple-devops-image .'
+    }
+    
+    stage('Push Docker Image'){
+       withCredentials([string(credentialsId: 'DOCKER_HUB_CREDENTIALS', variable: 'DOCKER_HUB_CREDENTIALS')]) {
+          sh "docker login -u lalithprasad12 -p ${DOCKER_HUB_CREDENTIALS}"
+        }
+        sh 'docker push lalithprasad12/simple-devops-image'
+     }
+     
+	 
+	
+    stage("Deploy To Kuberates Cluster"){
+        sh "kubectl apply -f valaxy-deploy.yml"
+        sh "kubectl rollout restart deployment.v1.apps/valaxy-deployment"
+        sh "kubectl apply -f valaxy-service.yml"
+      }
+     
+}
